@@ -23,7 +23,7 @@ export default function InputNumber({type, setNumber}: InputNumberProps) {
           <input key={i} type="text" maxLength={1} defaultValue="0" className="w-8 h-8 rounded-lg" onChange={e => setDigits(digits.map((digit, j) => j == i ? e.target.value = e.target.value.replace(/\D/, "") : digit))}/>
         ))}
       </div>}
-      {radix == 2 && <div className="flex gap-10">
+      {radix == 2 && <div className="flex gap-12">
         {Array(digitCount).fill(null).map((_, i) => (
           <div key={i}>
             <div>{radix}^{digitCount - i - 1}</div>
@@ -31,7 +31,7 @@ export default function InputNumber({type, setNumber}: InputNumberProps) {
           </div>
         ))}
       </div>}
-      {radix == 16 && <div className="flex gap-12">
+      {radix == 16 && <div className="flex gap-16">
         {Array(digitCount).fill(null).map((_, i) => (
           <div key={i}>
             <div>{radix}^{digitCount - i - 1}</div>

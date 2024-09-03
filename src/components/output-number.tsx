@@ -17,7 +17,7 @@ export default function OutputNumber({type, number}: OutputNumberProps) {
         <div>= {digits.map((digit, i) => `${parseInt(digit, radix) * radix ** (digits.length - i - 1)}`).join(" + ")}</div>
         <div>= {digits.map((digit, i) => `${parseInt(digit, radix)} × ${radix}^${digits.length - i - 1}`).join(" + ")}</div>
       </div>}
-      <div className={"flex " + (radix == 10 ? "gap-2" : radix == 2 ? "gap-10" : "gap-12") + " text-center align-middle"}>
+      <div className={"flex " + (radix == 10 ? "gap-2" : radix == 2 ? "gap-12" : "gap-16") + " text-center align-middle"}>
         {digits.map((digit, i) => <div key={i} className="flex flex-col items-center gap-2">
           <div>
             {radix != 10 && <div>{radix}^{digits.length - i - 1}</div>}
