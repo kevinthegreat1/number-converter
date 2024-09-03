@@ -9,11 +9,11 @@ export type OutputNumberProps = {
 
 export default function OutputNumber({type, number}: OutputNumberProps) {
   let radix = getRadix(type);
-  const digits = number.toString(radix).split("");
+  const digits = isNaN(number) ? [] : number.toString(radix).split("");
 
   return (
     <div className="flex flex-col items-center gap-4">
-      {radix != 10 && <div className="flex flex-col text-center gap-2">
+      {radix != 10 && digits.length != 0 && <div className="flex flex-col text-center gap-2">
         <div>= {digits.map((digit, i) => `${parseInt(digit, radix) * radix ** (digits.length - i - 1)}`).join(" + ")}</div>
         <div>= {digits.map((digit, i) => `${parseInt(digit, radix)} × ${radix}^${digits.length - i - 1}`).join(" + ")}</div>
       </div>}
