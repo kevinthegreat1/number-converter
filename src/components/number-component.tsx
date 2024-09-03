@@ -1,0 +1,26 @@
+"use client";
+
+import {useState} from "react";
+import InputNumber from "@/components/input-number";
+import TypeSelect from "@/components/type-select";
+import OutputNumber from "@/components/output-number";
+
+export type NumberComponentProps = {
+  input: boolean,
+  number?: number,
+  setNumber?: (number: number) => void
+}
+
+export default function NumberComponent({input, number = 0, setNumber = () => {}}: NumberComponentProps) {
+  const [type, setType] = useState("decimal");
+
+  return (
+    <div>
+      <div className="p-4 rounded-xl bg-sky-200 flex flex-row gap-4">
+        <TypeSelect type={type} setType={setType}/>
+        {input && <InputNumber type={type} setNumber={setNumber}/>}
+        {!input && <OutputNumber type={type} number={number}/>}
+      </div>
+    </div>
+  )
+}
