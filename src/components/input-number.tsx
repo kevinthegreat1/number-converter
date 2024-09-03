@@ -24,17 +24,17 @@ export default function InputNumber({type, setNumber}: InputNumberProps) {
       </div>}
       {radix == 2 && <div className="flex gap-10">
         {Array(16).fill(null).map((_, i) => (
-          <div>
+          <div key={i}>
             <div>{radix}^{actualDigits.length - i - 1}</div>
-            <input key={i} type="text" maxLength={1} className="w-8 h-8 rounded-lg" onChange={e => setDigits(digits.map((digit, j) => j == i ? e.target.value = e.target.value.replace(/[^01]/, "") : digit))}/>
+            <input type="text" maxLength={1} className="w-8 h-8 rounded-lg" onChange={e => setDigits(digits.map((digit, j) => j == i ? e.target.value = e.target.value.replace(/[^01]/, "") : digit))}/>
           </div>
         ))}
       </div>}
       {radix == 16 && <div className="flex gap-12">
         {Array(4).fill(null).map((_, i) => (
-          <div>
+          <div key={i}>
             <div>{radix}^{actualDigits.length - i - 1}</div>
-            <input key={i} type="text" maxLength={1} className="w-8 h-8 rounded-lg" onChange={e => setDigits(digits.map((digit, j) => j == i ? e.target.value = e.target.value.replace(/[^0-9A-Fa-f]/, "") : digit))}/>
+            <input type="text" maxLength={1} className="w-8 h-8 rounded-lg" onChange={e => setDigits(digits.map((digit, j) => j == i ? e.target.value = e.target.value.replace(/[^0-9A-Fa-f]/, "") : digit))}/>
           </div>
         ))}
       </div>}
