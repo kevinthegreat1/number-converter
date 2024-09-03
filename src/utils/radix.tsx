@@ -1,4 +1,4 @@
-export default function getRadix(type: string) {
+export function getRadix(type: string) {
   switch (type) {
     case "binary":
       return 2;
@@ -6,5 +6,16 @@ export default function getRadix(type: string) {
       return 16;
     default:
       return 10;
+  }
+}
+
+export function getDigitCount(type: string) {
+  switch (type) {
+    case "binary":
+      return 16;
+    case "hexadecimal":
+      return 4;
+    default:
+      return 4;
   }
 }

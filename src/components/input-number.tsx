@@ -1,7 +1,7 @@
 "use client";
 
 import {useState} from "react";
-import getRadix from "@/utils/radix";
+import {getDigitCount, getRadix} from "@/utils/radix";
 
 export type InputNumberProps = {
   type: string,
@@ -9,7 +9,8 @@ export type InputNumberProps = {
 }
 
 export default function InputNumber({type, setNumber}: InputNumberProps) {
-  const [digits, setDigits] = useState<string[]>(Array(16).fill(""));
+  const digitCount = getDigitCount(type);
+  const [digits, setDigits] = useState<string[]>(Array(digitCount).fill("0"));
   let radix = getRadix(type);
   const value = parseInt(digits.join(""), radix);
   setNumber(value);
@@ -18,23 +19,23 @@ export default function InputNumber({type, setNumber}: InputNumberProps) {
   return (
     <div className="flex flex-col items-center gap-4">
       {radix == 10 && <div className="flex gap-2">
-        {Array(4).fill(null).map((_, i) => (
-          <input key={i} type="text" maxLength={1} className="w-8 h-8 rounded-lg" onChange={e => setDigits(digits.map((digit, j) => j == i ? e.target.value = e.target.value.replace(/\D/, "") : digit))}/>
+        {Array(digitCount).fill(null).map((_, i) => (
+          <input key={i} type="text" maxLength={1} defaultValue="0" className="w-8 h-8 rounded-lg" onChange={e => setDigits(digits.map((digit, j) => j == i ? e.target.value = e.target.value.replace(/\D/, "") : digit))}/>
         ))}
       </div>}
       {radix == 2 && <div className="flex gap-10">
-        {Array(16).fill(null).map((_, i) => (
+        {Array(digitCount).fill(null).map((_, i) => (
           <div key={i}>
-            <div>{radix}^{actualDigits.length - i - 1}</div>
-            <input type="text" maxLength={1} className="w-8 h-8 rounded-lg" onChange={e => setDigits(digits.map((digit, j) => j == i ? e.target.value = e.target.value.replace(/[^01]/, "") : digit))}/>
+            <div>{radix}^{digitCount - i - 1}</div>
+            <input type="text" maxLength={1} defaultValue="0" className="w-8 h-8 rounded-lg" onChange={e => setDigits(digits.map((digit, j) => j == i ? e.target.value = e.target.value.replace(/[^01]/, "") : digit))}/>
           </div>
         ))}
       </div>}
       {radix == 16 && <div className="flex gap-12">
-        {Array(4).fill(null).map((_, i) => (
+        {Array(digitCount).fill(null).map((_, i) => (
           <div key={i}>
-            <div>{radix}^{actualDigits.length - i - 1}</div>
-            <input type="text" maxLength={1} className="w-8 h-8 rounded-lg" onChange={e => setDigits(digits.map((digit, j) => j == i ? e.target.value = e.target.value.replace(/[^0-9A-Fa-f]/, "") : digit))}/>
+            <div>{radix}^{digitCount - i - 1}</div>
+            <input type="text" maxLength={1} defaultValue="0" className="w-8 h-8 rounded-lg" onChange={e => setDigits(digits.map((digit, j) => j == i ? e.target.value = e.target.value.replace(/[^0-9A-Fa-f]/, "") : digit))}/>
           </div>
         ))}
       </div>}

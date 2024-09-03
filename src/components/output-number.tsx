@@ -1,6 +1,6 @@
 "use client";
 
-import getRadix from "@/utils/radix";
+import {getRadix} from "@/utils/radix";
 
 export type OutputNumberProps = {
   type: string,
@@ -18,7 +18,7 @@ export default function OutputNumber({type, number}: OutputNumberProps) {
         <div>= {digits.map((digit, i) => `${parseInt(digit, radix)} × ${radix}^${digits.length - i - 1}`).join(" + ")}</div>
       </div>}
       <div className={"flex " + (radix == 10 ? "gap-2" : radix == 2 ? "gap-10" : "gap-12") + " text-center align-middle"}>
-      {digits.map((digit, i) => <div key={i} className="flex flex-col items-center gap-2">
+        {digits.map((digit, i) => <div key={i} className="flex flex-col items-center gap-2">
           <div>
             {radix != 10 && <div>{radix}^{digits.length - i - 1}</div>}
             <div key={i} className="w-8 h-8 rounded-lg bg-sky-50 flex justify-center items-center">{digit.toUpperCase()}</div>
