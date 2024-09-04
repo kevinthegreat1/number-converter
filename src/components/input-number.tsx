@@ -1,7 +1,7 @@
 "use client";
 
 import {useState} from "react";
-import {getDigitCount, getRadix} from "@/utils/radix";
+import {getDigitCount, getRadix, getRegex, isValidRadix} from "@/utils/radix";
 
 export type InputNumberProps = {
   type: string,
@@ -9,12 +9,14 @@ export type InputNumberProps = {
 }
 
 export default function InputNumber({type, setNumber}: InputNumberProps) {
-  const digitCount = getDigitCount(type);
+  const radix = getRadix(type);
+  const digitCount = getDigitCount(radix);
+  const regex = getRegex(radix);
+
   const [digits, setDigits] = useState<string[]>(Array(digitCount).fill("0"));
-  let radix = getRadix(type);
-  const value = parseInt(digits.join(""), radix);
+  const value = isValidRadix(radix) ? parseInt(digits.join(""), radix) : NaN;
   setNumber(value);
-  const actualDigits = value.toString(radix).split("");
+  const actualDigits = isNaN(value) ? [] : value.toString(radix).split("");
 
   return (
     <div className="flex flex-col items-center gap-4">
@@ -23,19 +25,11 @@ export default function InputNumber({type, setNumber}: InputNumberProps) {
           <input key={i} type="text" maxLength={1} defaultValue="0" className="w-8 h-8 rounded-lg" onChange={e => setDigits(digits.map((digit, j) => j == i ? e.target.value = e.target.value.replace(/\D/, "") : digit))}/>
         ))}
       </div>}
-      {radix == 2 && <div className="flex gap-12">
+      {radix != 10 && <div className={"flex " + (radix <= 10 ? "gap-12" : "gap-16")}>
         {Array(digitCount).fill(null).map((_, i) => (
           <div key={i}>
             <div>{radix}^{digitCount - i - 1}</div>
-            <input type="text" maxLength={1} defaultValue="0" className="w-8 h-8 rounded-lg" onChange={e => setDigits(digits.map((digit, j) => j == i ? e.target.value = e.target.value.replace(/[^01]/, "") : digit))}/>
-          </div>
-        ))}
-      </div>}
-      {radix == 16 && <div className="flex gap-16">
-        {Array(digitCount).fill(null).map((_, i) => (
-          <div key={i}>
-            <div>{radix}^{digitCount - i - 1}</div>
-            <input type="text" maxLength={1} defaultValue="0" className="w-8 h-8 rounded-lg" onChange={e => setDigits(digits.map((digit, j) => j == i ? e.target.value = e.target.value.replace(/[^0-9A-Fa-f]/, "") : digit))}/>
+            <input type="text" maxLength={1} defaultValue="0" className="w-8 h-8 rounded-lg" onChange={e => setDigits(digits.map((digit, j) => j == i ? regex ? e.target.value = e.target.value.replace(regex, "") : e.target.value : digit))}/>
           </div>
         ))}
       </div>}

@@ -17,9 +17,7 @@ export default function NumberComponent({input, number = 0, setNumber = () => {}
   return (
     <div>
       <div className="p-2 rounded-xl bg-sky-200 flex flex-col gap-2">
-        <div>
-          <TypeSelect type={type} setType={setType}/>
-        </div>
+        <TypeSelect type={type} setType={setType}/>
         {input && <InputNumber key={type} type={type} setNumber={setNumber}/>}
         {!input && <OutputNumber type={type} number={number}/>}
       </div>
