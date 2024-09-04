@@ -20,16 +20,16 @@ export default function InputNumber({type, setNumber}: InputNumberProps) {
 
   return (
     <div className="flex flex-col items-center gap-4">
-      <div className={"flex " + (radix == 10 ? "gap-4" : radix <= 10 ? "gap-12" : "gap-16")}>
+      <div className={"flex " + (radix < 10 ? "gap-12" : "gap-16")}>
         {Array(digitCount).fill(null).map((_, i) => (
           <div key={i} className="flex flex-col items-center">
             <div>{radix}^{digitCount - i - 1}</div>
-            <input type="text" maxLength={1} defaultValue="0" className="w-8 h-8 rounded-lg" onChange={e => setDigits(digits.map((digit, j) => j == i ? regex ? e.target.value = e.target.value.replace(regex, "") : e.target.value : digit))}/>
+            <input type="text" maxLength={1} defaultValue="0" className="w-8 h-8 rounded-lg text-center" onChange={e => setDigits(digits.map((digit, j) => j == i ? regex ? e.target.value = e.target.value.replace(regex, "") : e.target.value : digit))}/>
           </div>
         ))}
       </div>
 
-      {radix != 10 && !isNaN(value) && <div className="flex flex-col text-center gap-2">
+      {actualDigits.length != 0 && <div className="flex flex-col text-center gap-2">
         <div>= {actualDigits.map((digit, i) => `${parseInt(digit, radix)} × ${radix}^${actualDigits.length - i - 1}`).join(" + ")}</div>
         <div>= {actualDigits.map((digit, i) => `${parseInt(digit, radix) * radix ** (actualDigits.length - i - 1)}`).join(" + ")}</div>
       </div>}

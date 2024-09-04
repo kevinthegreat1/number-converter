@@ -21,7 +21,9 @@ export default function TypeSelect({type, setType}: TypeSelectProps) {
         <option value="hexadecimal">Hexadecimal</option>
         <option value="base b">Base b</option>
       </select>
-      {select == "base b" && <input type="text" maxLength={2} defaultValue="10" className="w-8 h-8 rounded-lg" onChange={e => setType(e.target.value.replace(/\D/, ""))}></input>}
+      {select == "base b" && <div>
+        b = <input type="text" maxLength={2} defaultValue="10" className="w-8 h-8 rounded-lg" onChange={e => setType(e.target.value.replace(/\D/, ""))}/>
+      </div>}
     </div>
   )
 }
